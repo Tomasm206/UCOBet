@@ -13,8 +13,9 @@ public class Gerente{
         System.out.println("1. Elegir hora del juego");
         System.out.println("2. Restringir un número");
         System.out.println("3. Escoger pago ganador");
-        System.out.println("4. Salir");
-        System.out.print("Ingrese una opción (1/2/3/4): ");
+        System.out.println("4. Ingresar numero ganador");
+        System.out.println("5. Salir");
+        System.out.print("Ingrese una opción (1/2/3/4/5): ");
         String opcion = scanner.nextLine();
 
         switch (opcion) {
@@ -28,8 +29,13 @@ public class Gerente{
             case "3":
                 System.out.println("Saliendo del programa..."); //agregar mas casos porque son 4
                 break;
+            case "4":
+                System.out.println("Ingresar numero ganador...");
+                break;
+            case "5":
+                System.out.println("Salir del programa");
             default:
-                System.out.println("Opción inválida. Por favor, ingrese 1, 2 o 3.");
+                System.out.println("Opción inválida. Por favor, ingrese 1, 2, 3 o 4.");
         }
     }
     //elegir hora a jugar

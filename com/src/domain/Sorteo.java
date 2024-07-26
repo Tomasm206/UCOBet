@@ -87,6 +87,9 @@ public class Sorteo {
         }
 
         String numeroCogido = numero.substring(numero.length() - numCifras);
+            if (numCifras== 1){
+                apuesta*= 10;
+            }
 
         participantes.add(new Participante(nombre, documento, numeroCogido, apuesta));
 
