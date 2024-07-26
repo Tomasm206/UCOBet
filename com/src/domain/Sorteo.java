@@ -93,9 +93,22 @@ public class Sorteo {
         }
 
         String numeroCogido = numero.substring(numero.length() - numCifras);
-            if (numCifras== 1){
-                apuesta*= 10;
-            }
+
+        // Multiplicar la apuesta según el número de cifras indicado
+        switch (numCifras) {
+            case 1:
+                apuesta *= 10;
+                break;
+            case 2:
+                apuesta *= 15;
+                break;
+            case 3:
+                apuesta *= 50;
+                break;
+            case 4:
+                apuesta *= 100;
+                break;
+        }
 
         participantes.add(new Participante(nombre, documento, numeroCogido, apuesta));
 
