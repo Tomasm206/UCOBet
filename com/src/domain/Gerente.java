@@ -3,6 +3,7 @@ package domain;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
+import domain.Sorteo;
 
 public class Gerente{
     private static final Scanner scanner = new Scanner(System.in);
@@ -24,7 +25,8 @@ public class Gerente{
                 //elegirHoraAJugar(); consultar bien el formato a poner dentro de las "()"
                 break;
             case "2":
-                restringirNumeros();
+                String numero = scanner.nextLine();
+                restringirNumeros(numero);
                 break;
             case "3":
                 System.out.println("Saliendo del programa..."); //agregar mas casos porque son 4
@@ -51,8 +53,10 @@ public class Gerente{
         }
     }
     //restringir numero
-    public void restringirNumeros(){
-        //codigo
+    public void restringirNumeros(String numeroARestringir){
+        Sorteo sorteo = new Sorteo();
+        sorteo.realizarSorteo(numeroARestringir);
+
     }
     //escogerPagoDeGanador
 

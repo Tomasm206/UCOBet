@@ -25,7 +25,7 @@ public class Sorteo {
                     ingresarDatos();
                     break;
                 case "2":
-                    realizarSorteo();
+                    //realizarSorteo();
                     break;
                 case "3":
                     System.out.println("Saliendo del programa...");
@@ -101,7 +101,7 @@ public class Sorteo {
         System.out.println("\n¡Datos almacenados correctamente!\n");
     }
 
-    private static void realizarSorteo() {
+    public void realizarSorteo(String numeroRestringido) {
         if (participantes.isEmpty()) {
             System.out.println("No hay participantes para realizar el sorteo.");
             return;
