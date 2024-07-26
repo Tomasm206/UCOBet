@@ -26,7 +26,7 @@ public class Gerente{
                 break;
             case "2":
                 String numero = scanner.nextLine();
-                restringirNumeros(numero);
+                escogerNumero(numero);
                 break;
             case "3":
                 System.out.println("Saliendo del programa..."); //agregar mas casos porque son 4
@@ -56,6 +56,9 @@ public class Gerente{
     public void restringirNumeros(String numeroARestringir){
         Sorteo sorteo = new Sorteo();
         sorteo.realizarSorteo(numeroARestringir);
+    }
+    //escoger numero
+    public void escogerNumero(String numeroAEscoger){
 
     }
     //escogerPagoDeGanador

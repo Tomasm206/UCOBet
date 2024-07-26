@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import domain.Gerente;
 
 
 public class Sorteo {
@@ -45,8 +46,13 @@ public class Sorteo {
 
         String numero;
         while (true) {
+            Gerente gerente = new Gerente();
             System.out.print("Ingrese un número de 4 cifras para el sorteo: ");
             numero = scanner.nextLine();
+//            if (numero == gerente.escogerNumero(numero)){
+//                //codigo
+//            }
+
             if (numero.length() == 4 && numero.chars().allMatch(Character::isDigit)) {
                 break;
             } else {
