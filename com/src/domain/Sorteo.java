@@ -39,7 +39,7 @@ public class Sorteo {
             }
         }
     }
-    //Revisar Parte de Estefa
+
     private static void ingresarDatos() {
         System.out.println("=== Menú para ingresar datos de persona ===");
         System.out.print("Ingrese el nombre de la persona: ");
