@@ -11,11 +11,7 @@ public class Sorteo {
     private static final Random random = new Random();
     private static final List<Participante> participantes = new ArrayList<>();
 
-    public static void main(String[] args) {
-        menu();
-    }
-
-    private static void menu() {
+    public void menu() {
         while (true) {
             System.out.println("=== MENÚ ===");
             System.out.println("1. Ingresar datos de persona");

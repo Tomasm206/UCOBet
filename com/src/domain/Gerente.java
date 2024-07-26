@@ -20,14 +20,14 @@ public class Gerente{
         switch (opcion) {
             case "1":
                 System.out.print("Ingrese la fecha del sorteo  ");
-                //elegirHoraAJugar();
+                //elegirHoraAJugar(); consultar bien el formato a poner dentro de las "()"
                 break;
             case "2":
                 restringirNumeros();
                 break;
             case "3":
-                System.out.println("Saliendo del programa...");
-                return;
+                System.out.println("Saliendo del programa..."); //agregar mas casos porque son 4
+                break;
             default:
                 System.out.println("Opción inválida. Por favor, ingrese 1, 2 o 3.");
         }
