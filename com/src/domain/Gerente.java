@@ -23,8 +23,7 @@ public class Gerente extends Participante{
         switch (opcion) {
             case "1":
                 System.out.print("Ingrese la fecha del sorteo  ");
-                LocalDateTime opcion = scanner.nextLine();
-                elegirHoraAJugar(opcion);
+                //elegirHoraAJugar();
                 break;
             case "2":
                 restringirNumeros();
