@@ -4,12 +4,9 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
-public class Gerente extends Participante{
+public class Gerente{
     private static final Scanner scanner = new Scanner(System.in);
 
-    public Gerente(String nombre, String documento, String numero, double apuesta) {
-        super(nombre, documento, numero, apuesta);
-    }
 
     public void menu(){
         System.out.println("=== MENÚ GERENTE ===");

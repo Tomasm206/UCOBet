@@ -15,6 +15,8 @@ public class App {
         System.out.println("3. USUARIO");
 
         String opcion = scanner.nextLine();
-        
+        if (opcion.equals("1")){
+            //codigo
+        }
     }
 }
