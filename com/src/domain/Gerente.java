@@ -3,7 +3,6 @@ package domain;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
-import domain.Sorteo;
 
 public class Gerente{
     private static final Scanner scanner = new Scanner(System.in);
@@ -21,16 +20,16 @@ public class Gerente{
 
         switch (opcion) {
             case "1":
-                System.out.print("Ingrese la fecha del sorteo  ");
-                //elegirHoraAJugar(); consultar bien el formato a poner dentro de las "()"
-                break;
+                System.out.print("=== Ingrese la fecha del sorteo ===\n");
+                elegirHoraAJugar(formatoFechaHora());
+                return;
             case "2":
                 String numero = scanner.nextLine();
                 escogerNumero(numero);
                 break;
             case "3":
                 System.out.println("Saliendo del programa..."); //agregar mas casos porque son 4
-                break;
+                return;
             case "4":
                 System.out.println("Ingresar numero ganador...");
                 break;
@@ -45,11 +44,35 @@ public class Gerente{
         LocalDateTime ahora = LocalDateTime.now();
         long minutosHastaSorteo = ChronoUnit.MINUTES.between(ahora, fechaYHoraDelSorteo);
 
-        if (minutosHastaSorteo <= 5) {
+        if ((ahora.getHour() < fechaYHoraDelSorteo.getHour()) //Se controla las apuestas despues del sorteo
+                && (ahora.getDayOfMonth() == fechaYHoraDelSorteo.getDayOfMonth())){
+            System.out.println("Los usuarios pueden realizar apuestas. Tiempo restante: " + minutosHastaSorteo + " minutos.");
+        } else if (minutosHastaSorteo <= 5) {
             System.out.println("Las apuestas están bloqueadas. Faltan menos de 5 minutos para el sorteo.");
         } else {
-            System.out.println("Puedes realizar tu apuesta. Tiempo restante: " + minutosHastaSorteo + " minutos.");
-            //Llamar funcion sorteo
+            System.out.println("El Sorteo ya se ha realizado");
+        }
+    }
+    //Formato ingreso de fecha
+    public LocalDateTime formatoFechaHora(){
+        int dia = leerEntero("Ingrese el día del sorteo (DD)");
+        int mes = leerEntero("Ingrese el mes del sorteo (MM)");
+        int ano = leerEntero("Ingrese el año del sorteo (AAAA)");
+        int hora = leerEntero("Ingrese la hora del sorteo (24H) (HH)");
+        int minutos = leerEntero("Ingrese los minutos de la hora del sorteo (MM)");
+
+        return LocalDateTime.of(ano, mes, dia, hora, minutos);
+    }
+    //Validar ingreso de numeros enteros
+    private int leerEntero(String mensaje) {
+        while (true) {
+            System.out.print(mensaje + ": ");
+            if (scanner.hasNextInt()) {
+                return scanner.nextInt();
+            } else {
+                System.out.println("Error: Debe ingresar un número entero.");
+                scanner.next();
+            }
         }
     }
     //restringir numero
