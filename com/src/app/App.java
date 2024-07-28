@@ -1,5 +1,6 @@
 package app;
 
+import domain.Documentacion;
 import domain.Gerente;
 import domain.Sorteo;
 import java.util.Scanner;
@@ -7,9 +8,10 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
+        Documentacion docu = new Documentacion();
+        docu.documentacion();
         while (true) {
-            System.out.println("=== BIENVENIDO A UCOBET ===");
+            System.out.println("\n=== BIENVENIDO A UCOBET ===");
             System.out.println("¿CÓMO DESEA INGRESAR?");
             System.out.println("1. GERENTE");
             System.out.println("2. USUARIO");
@@ -27,10 +29,9 @@ public class App {
                 System.out.println("Saliendo del programa...");
                 break;
             } else {
-                System.out.println("OPCIÓN NO DISPONIBLE");
+                System.out.println("OPCIÓN NO DISPONIBLE\n");
             }
         }
-
         scanner.close();
     }
 }

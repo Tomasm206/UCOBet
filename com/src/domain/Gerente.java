@@ -26,7 +26,7 @@ public class Gerente{
                 Sorteo.reglas.setHoraDeJuego(horaJuego); // set pone
                 return;
             case "2":
-                System.out.printf("== Ingrese el numero a restringir ==");
+                System.out.print("=== Ingrese el numero a restringir ===");
                 String numero = scanner.nextLine();
                 restringirNumeros(numero);
                 break;
@@ -82,6 +82,7 @@ public class Gerente{
     public void restringirNumeros(String numeroARestringir){
         while(true){
             if (numeroARestringir.length() == 4 && numeroARestringir.chars().allMatch(Character::isDigit)) {
+                System.out.println("El número " + numeroARestringir + " ha sido restringido...");
                 Sorteo.reglas.setNumeroRestringido(numeroARestringir);
                 break;
             }else{

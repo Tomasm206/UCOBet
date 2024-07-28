@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-import domain.Gerente;
 
 
 public class Sorteo {
@@ -12,12 +11,13 @@ public class Sorteo {
     private static final Random random = new Random();
     private static final List<Participante> participantes = new ArrayList<>();
     static Reglas reglas = new Reglas(null, null);
+    static Boleta boleta = new Boleta(null,0);
 
     public void menu() {
         while (true) {
             System.out.println("=== MENÚ ===");
             System.out.println("1. Ingresar datos de persona");
-            System.out.println("2. Realizar sorteo");
+            System.out.println("2. Realizar sorteo"); //cambiar por funcion consulta de fecha y numRestringido
             System.out.println("3. Salir");
             System.out.print("Ingrese una opción (1/2/3): ");
             String opcion = scanner.nextLine();
@@ -47,17 +47,18 @@ public class Sorteo {
 
         String numero;
         while (true) {
-            Gerente gerente = new Gerente();
+            String numeroRestringido = String.valueOf(reglas.getNumeroRestringido());
             System.out.print("Ingrese un número de 4 cifras para el sorteo: ");
             numero = scanner.nextLine();
-//            if (numero == gerente.escogerNumero(numero)){
-//                //codigo
-//            }
 
-            if (numero.length() == 4 && numero.chars().allMatch(Character::isDigit)) {
+            if ((numero.length() == 4 && numero.chars().allMatch(Character::isDigit)) && (!numero.equals(numeroRestringido))) {
+                System.out.println("El número " + numero + "ha sido ingresado correctamente...");
+                boleta.setNumero(numero);
                 break;
+            } else if (numero.equals(numeroRestringido)) {
+                System.out.println("El número está bloqueado. Porfavor elija otro numero...");
             } else {
-                System.out.println("Número inválido. Por favor, ingrese un número de 4 cifras.");
+                System.out.println("Número inválido. Por favor, ingrese un número de 4 cifras...");
             }
         }
 
@@ -67,6 +68,8 @@ public class Sorteo {
                 System.out.print("Ingrese la cantidad de dinero que desea apostar: ");
                 apuesta = Double.parseDouble(scanner.nextLine());
                 if (apuesta > 0) {
+                    System.out.println("La apuesta " + apuesta + "ha sido ingresado correctamente...");
+                    boleta.setCantidad(apuesta);
                     break;
                 } else {
                     System.out.println("La apuesta debe ser un número positivo.");
