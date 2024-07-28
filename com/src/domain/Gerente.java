@@ -21,11 +21,14 @@ public class Gerente{
         switch (opcion) {
             case "1":
                 System.out.print("=== Ingrese la fecha del sorteo ===\n");
-                elegirHoraAJugar(formatoFechaHora());
+                LocalDateTime horaJuego = formatoFechaHora();
+                controlTiempoJuego(horaJuego);
+                Sorteo.reglas.setHoraDeJuego(horaJuego); // set pone
                 return;
             case "2":
+                System.out.printf("== Ingrese el numero a restringir ==");
                 String numero = scanner.nextLine();
-                escogerNumero(numero);
+                restringirNumeros(numero);
                 break;
             case "3":
                 System.out.println("Saliendo del programa..."); //agregar mas casos porque son 4
@@ -40,9 +43,9 @@ public class Gerente{
         }
     }
     //elegir hora a jugar
-    public void elegirHoraAJugar(LocalDateTime fechaYHoraDelSorteo){
-        LocalDateTime ahora = LocalDateTime.now();
-        long minutosHastaSorteo = ChronoUnit.MINUTES.between(ahora, fechaYHoraDelSorteo);
+    public void controlTiempoJuego(LocalDateTime fechaYHoraDelSorteo){
+        LocalDateTime ahora = LocalDateTime.now(); // crea una variable del tiempo actual
+        long minutosHastaSorteo = ChronoUnit.MINUTES.between(ahora, fechaYHoraDelSorteo); // crear una variable donde compara la fecha que ingreso
 
         if ((ahora.getHour() < fechaYHoraDelSorteo.getHour()) //Se controla las apuestas despues del sorteo
                 && (ahora.getDayOfMonth() == fechaYHoraDelSorteo.getDayOfMonth())){
@@ -65,7 +68,7 @@ public class Gerente{
     }
     //Validar ingreso de numeros enteros
     private int leerEntero(String mensaje) {
-        while (true) {
+        while (true) { //Control de ingreso de un numero valido para las fechas
             System.out.print(mensaje + ": ");
             if (scanner.hasNextInt()) {
                 return scanner.nextInt();
@@ -77,13 +80,14 @@ public class Gerente{
     }
     //restringir numero
     public void restringirNumeros(String numeroARestringir){
-        Sorteo sorteo = new Sorteo();
-        sorteo.realizarSorteo(numeroARestringir);
-    }
-    //escoger numero
-    public void escogerNumero(String numeroAEscoger){
+        while(true){
+            if (numeroARestringir.length() == 4 && numeroARestringir.chars().allMatch(Character::isDigit)) {
+                Sorteo.reglas.setNumeroRestringido(numeroARestringir);
+                break;
+            }else{
+                System.out.println("El numero ingreado no es valido, intente de nuevo...  ");
 
+            }
+        }
     }
-    //escogerPagoDeGanador
-
 }

@@ -11,6 +11,7 @@ public class Sorteo {
     private static final Scanner scanner = new Scanner(System.in);
     private static final Random random = new Random();
     private static final List<Participante> participantes = new ArrayList<>();
+    static Reglas reglas = new Reglas(null, null);
 
     public void menu() {
         while (true) {
