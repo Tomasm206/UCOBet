@@ -12,8 +12,8 @@ public class Gerente{
         System.out.println("=== MENÚ GERENTE ===");
         System.out.println("1. Elegir hora del juego");
         System.out.println("2. Restringir un número");
-        System.out.println("3. Escoger pago ganador");
-        System.out.println("4. Ingresar numero ganador");
+        System.out.println("3. Realizar Sorteo");
+        System.out.println("4. Ingresar numero ganador");//Falta metodo completo
         System.out.println("5. Salir");
         System.out.print("Ingrese una opción (1/2/3/4/5): ");
         String opcion = scanner.nextLine();
@@ -22,19 +22,24 @@ public class Gerente{
             case "1":
                 System.out.print("=== Ingrese la fecha del sorteo ===\n");
                 LocalDateTime horaJuego = formatoFechaHora();
-                controlTiempoJuego(horaJuego);
                 Sorteo.reglas.setHoraDeJuego(horaJuego); // set pone
                 return;
             case "2":
                 System.out.print("=== Ingrese el numero a restringir ===");
                 String numero = scanner.nextLine();
-                restringirNumeros(numero);
+                if (Sorteo.reglas.getHoraDeJuego() != null){
+                    restringirNumeros(numero);
+                }
+                else {
+                    System.out.println("El gerente no ha definido una fecha de sorteo...");
+                    }
                 break;
             case "3":
-                System.out.println("Saliendo del programa..."); //agregar mas casos porque son 4
+                System.out.println("=== Realizar el sorteo ===");
+                controlTiempoJuego(Sorteo.reglas.getHoraDeJuego());
                 return;
             case "4":
-                System.out.println("Ingresar numero ganador...");
+                System.out.println("=== Ingrese numero ganador ===");
                 break;
             case "5":
                 System.out.println("Salir del programa");
@@ -50,8 +55,11 @@ public class Gerente{
         if ((ahora.getHour() < fechaYHoraDelSorteo.getHour()) //Se controla las apuestas despues del sorteo
                 && (ahora.getDayOfMonth() == fechaYHoraDelSorteo.getDayOfMonth())){
             System.out.println("Los usuarios pueden realizar apuestas. Tiempo restante: " + minutosHastaSorteo + " minutos.");
-        } else if (minutosHastaSorteo <= 5) {
+        } else if (minutosHastaSorteo <= 5 && minutosHastaSorteo > 0) {
             System.out.println("Las apuestas están bloqueadas. Faltan menos de 5 minutos para el sorteo.");
+        } else if (minutosHastaSorteo <= 0){
+            System.out.println("La apuesta ha sido realizada o esta en proceso de realizacion");
+            new Sorteo().realizarSorteo();
         } else {
             System.out.println("El Sorteo ya se ha realizado");
         }
@@ -79,11 +87,11 @@ public class Gerente{
         }
     }
     //restringir numero
-    public void restringirNumeros(String numeroARestringir){
+    public void restringirNumeros(String restringirNumeros){
         while(true){
-            if (numeroARestringir.length() == 4 && numeroARestringir.chars().allMatch(Character::isDigit)) {
-                System.out.println("El número " + numeroARestringir + " ha sido restringido...");
-                Sorteo.reglas.setNumeroRestringido(numeroARestringir);
+            if (restringirNumeros.length() == 4 && restringirNumeros.chars().allMatch(Character::isDigit)) {
+                System.out.println("El número " + restringirNumeros + " ha sido restringido...");
+                Sorteo.reglas.setNumeroRestringido(restringirNumeros);
                 break;
             }else{
                 System.out.println("El numero ingreado no es valido, intente de nuevo...  ");
