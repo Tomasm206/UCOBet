@@ -12,4 +12,8 @@ class Participante {
         this.numero = numero;
         this.apuesta = apuesta;
     }
+
+    public String getNumero() {
+        return numero;
+    }
 }

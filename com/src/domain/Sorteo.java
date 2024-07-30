@@ -1,14 +1,17 @@
 package domain;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Sorteo {
     private static final Scanner scanner = new Scanner(System.in);
     private static final Random random = new Random();
-    private static final List<Participante> participantes = new ArrayList<>();
+    protected static final List<Participante> participantes = new ArrayList<>();
     protected static Reglas reglas = new Reglas(null, null);
     protected static Boleta boleta = new Boleta(null, 0);
 
@@ -16,24 +19,47 @@ public class Sorteo {
         while (true) {
             System.out.println("=== MENÚ ===");
             System.out.println("1. Ingresar datos de persona");
-            System.out.println("2. Realizar sorteo"); // Cambiar por función consulta de fecha y numRestringido
-            System.out.println("3. Salir");
+            System.out.println("2. Consultar fecha y numero restringido");
+            System.out.println("3. Volver al menú");
             System.out.print("Ingrese una opción (1/2/3): ");
             String opcion = scanner.nextLine();
 
             switch (opcion) {
                 case "1":
-                    ingresarDatos();
+                    if (reglas.getHoraDeJuego() != null){
+                        condicionesIngresoDatosParaSorteo(reglas.getHoraDeJuego());
+                    } else {
+                        System.out.println("No se ha definido una fecha para el sorteo...");
+                    }
                     break;
                 case "2":
                 //Crear funcion para revisar numeros restringido y la fecha
                     break;
                 case "3":
-                    System.out.println("Saliendo del programa...");
+                    System.out.println("Volviendo al menú principal...");
                     return;
                 default:
                     System.out.println("Opción inválida. Por favor, ingrese 1, 2 o 3.");
             }
+        }
+    }
+
+    public void condicionesIngresoDatosParaSorteo(LocalDateTime fechaYHoraDelSorteo){ //funcion creada para restringir el ingreso antes de 5 min y despues del sorteo
+        LocalDateTime ahora = LocalDateTime.now(); // crea una variable del tiempo actual
+        long minutosHastaSorteo = ChronoUnit.MINUTES.between(ahora, fechaYHoraDelSorteo); // crear una variable donde compara la fecha que ingreso
+
+        if ((ahora.getHour() < fechaYHoraDelSorteo.getHour()) //Se controla las apuestas despues del sorteo
+                && (ahora.getDayOfMonth() == fechaYHoraDelSorteo.getDayOfMonth()) //Rectifica que el sorteo sea hoy para evitar mostrar minutos erroneos
+                && (minutosHastaSorteo > 5)){ //Condicion de los 5 minutos
+            System.out.println("Aún puedes realizar tu apuestas. Tiempo restante: " + minutosHastaSorteo + " minutos.");
+            System.out.println("=== Ingresa tus datos y tu apuesta ===");
+            ingresarDatos();
+        } else if ((minutosHastaSorteo <= 5 && minutosHastaSorteo > 0) && (ahora.getDayOfMonth() == fechaYHoraDelSorteo.getDayOfMonth())) {
+            System.out.println("Las apuestas están bloqueadas. Faltan menos de 5 minutos para el sorteo.");
+        } else if (minutosHastaSorteo <= 0 && (ahora.getDayOfMonth() == fechaYHoraDelSorteo.getDayOfMonth())){
+            System.out.println("El sorteo ya se ha realizado, consulte si estan disponibles los resultados...");
+        } else {
+            System.out.println("La fecha es del sorteo es diferente a la actual");
         }
     }
 
@@ -132,13 +158,18 @@ public class Sorteo {
     }
 
     public void realizarSorteo() {
+        List<Participante> participantesGanadores = participantes.stream()
+                .filter(person -> person.getNumero().equals(Gerente.numGanador.getNumero())).collect(Collectors.toList());
+
         if (participantes.isEmpty()) {
             System.out.println("No hay participantes para realizar el sorteo.");
-            return;
+        } else if (!participantesGanadores.isEmpty()) {
+            System.out.println("=== Los ganadores son ===");
+            participantesGanadores.forEach(gana -> System.out.println("Nombre: " + gana.nombre + " ganó con el número: " + gana.numero));
+        } else {
+            Participante ganador = participantes.get(random.nextInt(participantes.size()));
+            System.out.println("¡El ganador del sorteo es: " + ganador.nombre + " con el número " + ganador.numero + "!");
+            System.out.println("Ha apostado: $" + ganador.apuesta);
         }
-
-        Participante ganador = participantes.get(random.nextInt(participantes.size()));
-        System.out.println("¡El ganador del sorteo es: " + ganador.nombre + " con el número " + ganador.numero + "!");
-        System.out.println("Ha apostado: $" + ganador.apuesta);
     }
 }
