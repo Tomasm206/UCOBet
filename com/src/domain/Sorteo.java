@@ -33,7 +33,11 @@ public class Sorteo {
                     }
                     break;
                 case "2":
-                //Crear funcion para revisar numeros restringido y la fecha
+                    if (reglas.getHoraDeJuego() != null && reglas.getNumeroRestringido() != null){
+                        System.out.println("La hora de juego es: " + reglas.getHoraDeJuego() + " y el numero restringido es: " + reglas.getNumeroRestringido());
+                    } else {
+                        System.out.println("No se ha definido sorteo...");
+                    }
                     break;
                 case "3":
                     System.out.println("Volviendo al menú principal...");
